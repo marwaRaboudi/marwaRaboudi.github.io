@@ -1,0 +1,53 @@
+<div class="modal">
+  <div *ngIf="!displayForm; then detailsTemplate else formTemplate">
+  </div>
+</div>
+
+<ng-template #detailsTemplate>
+  <div class="modal-container">
+    <div>
+      <img src="../../assets/images/hotel.jpg">
+    </div>
+    <div>
+      <div class="modal-title">{{data?.title}}</div>
+      <div class="additional-info">3.4 KM from the city center</div>
+      <div class="price">£ 98</div>
+      <div class="additional-info">Designs may vary</div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="showForm()" class="modal-action-btn" type="button">BOOK</button>
+  </div>
+</ng-template>
+
+<ng-template #formTemplate>
+  <form (ngSubmit)="onSubmit()" [formGroup]="bookForm" class="book-form">
+    <div>
+      <label for="fullName">
+        Full Name:
+      </label>
+      <input formControlName="fullName" id="fullName" required type="text" class="form-input">
+      <div *ngIf="bookForm.get('fullName')?.hasError('required') && bookForm.get('fullName')?.touched" class="error-message">
+        Full Name is required
+      </div>
+    </div>
+    <div>
+      <label for="email">
+        Email:
+      </label>
+      <input formControlName="email" id="email" required type="email" class="form-input">
+      <div *ngIf="bookForm.get('email')?.hasError('required') && bookForm.get('email')?.touched" class="error-message">
+        Email is required
+      </div>
+      <div *ngIf="bookForm.get('email')?.hasError('email')" class="error-message">
+        Please enter a valid address mail
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+      <button [disabled]="!bookForm.valid" type="submit" class="submit-btn">Submit</button>
+    </div>
+  </form>
+</ng-template>
+
+<div id="toast">Congratulations! </div>
